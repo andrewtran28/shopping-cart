@@ -1,0 +1,70 @@
+import {useState, useEffect} from 'react';
+import Item from './Item';
+
+const NUM_ITEMS = 5;
+
+function Store() {
+    const [products, setProducts] = useState([]);
+    const [store, setStore] = useState([]);
+
+    useEffect(() => {
+        fetch('https://fakestoreapi.com/products/', { mode: 'cors'})
+            .then(response => response.json())
+            .then(data => setProducts(data))
+            .then(() => setStore(GetProducts()));
+        
+    }, [products.length]);
+
+    const randomNumber = () => {
+        const NUM_PRODUCTS = 20; //Total products in Fake Store API
+        return Math.floor(Math.random() * NUM_PRODUCTS);
+    }
+
+    const GetProducts = () => { 
+        let stack = [];
+        let indexStack = [];
+    
+        for (var i = 0; i < NUM_ITEMS; i++) {
+            var index = randomNumber();
+    
+            //Re-choose index if stack already has this number
+            while (indexStack.includes(index)) {
+              index = randomNumber();
+            }
+    
+            let product = {
+                key: products[index].id,
+                name: products[index].title,
+                img: products[index].image,
+                price: `${products[index].price}`,
+            }  
+    
+            indexStack[i] = index;
+            stack[i] = product;
+        }
+
+        return stack;
+    }
+
+    return (
+        <>
+            <h1>This is the Store Page</h1>
+            {store.map((item) => {        
+                    return (
+                        <Item
+                            name={item.name}
+                            img={item.img}
+                            price={item.price}
+                            stock={item.stock}
+                            key={item.key}
+                            // handleCardClick={() => handleCardClick(card.name)}
+                        /> 
+                );
+            })}          
+        </>
+
+        
+    )
+}
+
+export default Store;
