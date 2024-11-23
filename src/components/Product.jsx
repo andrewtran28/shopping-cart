@@ -1,15 +1,16 @@
 import { useState } from 'react';
 
-function Item({ name, img, price }) {
+function Product({ name, img, price, sendDataToParent }) {
     const [quantity, setQuantity] = useState(1);
+    const [item, setItem] = useState ("");
 
     const handleQuantityChange = (e) => {
-        if (e.target.value < 0) {
+        if (e.target.value <= 0) {
             setQuantity(0);
         } else if (e.target.value > 99) {
             setQuantity(99);
         } else {
-            setQuantity(e.target.value);
+            setQuantity(Number(e.target.value));
         }
     }
 
@@ -33,8 +34,7 @@ function Item({ name, img, price }) {
     }
 
     const handleAddToCart = () => {
-        console.log("Added " + quantity + "x " + name + " to cart.");
-        //sends: item: {name, price, quantity} to cart 
+        sendDataToParent({name, price, quantity});
     }
 
     return (
@@ -55,4 +55,4 @@ function Item({ name, img, price }) {
     )
 }
 
-export default Item;
+export default Product;

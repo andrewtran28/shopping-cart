@@ -1,9 +1,9 @@
-import {useState, useEffect} from 'react';
-import Item from './Item';
+import { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import Product from './Product';
 
-const NUM_ITEMS = 5;
-
-function Store() {
+function Storepage({ updateCart }) {
+    const NUM_ITEMS = 6;
     const [products, setProducts] = useState([]);
     const [store, setStore] = useState([]);
 
@@ -12,7 +12,6 @@ function Store() {
             .then(response => response.json())
             .then(data => setProducts(data))
             .then(() => setStore(GetProducts()));
-        
     }, [products.length]);
 
     const randomNumber = () => {
@@ -31,12 +30,12 @@ function Store() {
             while (indexStack.includes(index)) {
               index = randomNumber();
             }
-    
+
             let product = {
-                key: products[index].id,
                 name: products[index].title,
                 img: products[index].image,
                 price: `${products[index].price}`,
+                key: products[index].id,
             }  
     
             indexStack[i] = index;
@@ -46,25 +45,27 @@ function Store() {
         return stack;
     }
 
+    const handleDataFromProduct = (productData) => {
+        console.log(productData);
+        updateCart(productData);
+    }
+
     return (
         <>
             <h1>This is the Store Page</h1>
             {store.map((item) => {        
-                    return (
-                        <Item
-                            name={item.name}
-                            img={item.img}
-                            price={item.price}
-                            stock={item.stock}
-                            key={item.key}
-                            // handleCardClick={() => handleCardClick(card.name)}
-                        /> 
+                return (
+                    <Product
+                        name={item.name}
+                        img={item.img}
+                        price={item.price}
+                        key={item.key}
+                        sendDataToParent={handleDataFromProduct}
+                    /> 
                 );
             })}          
         </>
-
-        
     )
 }
 
-export default Store;
+export default Storepage;

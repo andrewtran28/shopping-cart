@@ -30,6 +30,45 @@ input[type=number] {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.cart-header {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /* border: 1px solid blue; */
+  position: relative;
+  padding: 5px;
+}
+
+.cart-icon {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.cart-num {
+  /* display: none; */
+  border-radius: 10px;
+  background-color: green;
+  padding: 0 6px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+.item {
+  border: 1px solid red;
+}
+
+.btn-quantity {
+  border-radius: 5px;
+  padding: 0 5px;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -43,12 +82,4 @@ input[type=number] {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
