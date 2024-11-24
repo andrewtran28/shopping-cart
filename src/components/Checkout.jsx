@@ -73,7 +73,7 @@ function Checkout({ cart, editCart }) {
         <>
             {checkoutCart.length <= 0 ? (
                 <>
-                    <h1>Your Thift Cart is empty...</h1>
+                    <h1>Your cart is empty...</h1>
                     <Link to="../store">
                         <button className="btn-welcome" >Start Shopping</button>
                     </Link>
@@ -85,7 +85,8 @@ function Checkout({ cart, editCart }) {
                         <ul>
                             {checkoutCart.map((item, index) => (
                                 <li key={item.id}>
-                                    <div>[{item.id}]{item.name}</div>
+                                    <img className="checkout-img" src={item.img} />
+                                    <div>{item.name}</div>
                                     <div>{money.format(item.price)}</div>
                                     <button className="btn-quantity" onClick={() => handleDecrease(index)}>-</button>
                                     {item.quantity}

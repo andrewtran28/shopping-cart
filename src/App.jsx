@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+
 import logo from './assets/logo.png';
 import cartIcon from './assets/shopping-cart.svg';
-import './App.css';
 import Homepage from './components/Homepage';
 import Storepage from './components/Storepage';
 import Checkout from './components/Checkout';
+
+import './App.css';
 
 function App() {
   const [cart, setCart] = useState([]); //useState may be old data from cart update.
@@ -46,40 +48,47 @@ function App() {
 
   return (
     <>
-      <div className="header">
-      <Link to="../home">
-        <img className="logo" src={logo}/>
-      </Link>
+      <header>
+        <Link to="../home">
+          <img className="logo" src={logo}/>
+        </Link>
         <nav>
             <Link to="../home">Home</Link>
             <Link to="../store">Store</Link>
         </nav>
 
-        <div className="cart-header">
-            <img className="cart-icon" src={cartIcon}/>
-            <div className="cart-num">
-                {itemNum} 
-            </div>
-        </div>
-        <Link to="../checkout">
-          <button className="btn-checkout">Go to Cart</button>
-        </Link>
-      </div>
 
-      {name === "home" ? (
-        <Homepage />
-      ) : name === "store" ? (
-        <Storepage 
-          addToCart={addToCart}
-        />
-      ) : name === "checkout" ? (
-        <Checkout 
-          cart={cart}
-          editCart={editCart}
-        />
-      ) : (
-        <Homepage />
-      )}
+        <div className="cart-header">
+          <div className="cart-icon">
+          <Link to="../checkout">
+            <img className="cart-icon-img" src={cartIcon}/>
+          </Link>
+            <div className="cart-num">{itemNum}</div>
+          </div>
+
+          <Link to="../checkout">
+            <button className="btn-checkout">Go to Cart</button>
+          </Link>
+        </div>
+      </header>
+
+      <main>
+        {name === "home" ? (
+          <Homepage />
+        ) : name === "store" ? (
+          <Storepage 
+            addToCart={addToCart}
+          />
+        ) : name === "checkout" ? (
+          <Checkout 
+            cart={cart}
+            editCart={editCart}
+          />
+        ) : (
+          <Homepage />
+        )}
+      </main>
+
     </>
   )
 }

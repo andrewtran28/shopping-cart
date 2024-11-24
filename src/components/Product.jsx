@@ -39,23 +39,24 @@ function Product({ name, img, price, id, addProduct }) {
     }
 
     const handleAddToCart = () => {
-        addProduct({name, img, price, quantity, id});
+        if(quantity > 0) {
+            addProduct({name, img, price, quantity, id});
+        }
     }
 
     return (
         <div className="item">
-            <img src={img} width="300px"/> <br />
+            <img className="item-img" src={img}/>
             <span className="item-name">{name}</span>
-            <br />
-            <span className="item-price">{formatter.format(price)}</span>
-            <br />SKU: {id}
-            <div>
+            <div className="item-price">{formatter.format(price)}</div>
+            <div className="item-quantity">
                 <label>Quantity: </label>
                 <button className="btn-quantity" onClick={handleDecrease}>-</button>
-                <input type="number" min='0' max='99' value={quantity} onChange={handleQuantityChange} />
+                <input className="input-quantity" type="number" min='0' max='99' value={quantity} onChange={handleQuantityChange} />
                 <button className="btn-quantity" onClick={handleIncrease}>+</button>
             </div>
-            <button className="item-add-cart" onClick={handleAddToCart}>Add to Cart</button>
+            <button className="btn-add-cart" onClick={handleAddToCart}>Add to Cart</button>
+            <div className="item-SKU">SKU: {String(id).padStart(4, '0')}</div>
         </div>
     )
 }
