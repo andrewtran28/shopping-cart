@@ -1,14 +1,11 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Homepage = () => {
-  const [cart, setCart] = useState([]); //useState may be old data from cart update.
-
+function Homepage() {
     return (
       <>
         <h1>Welcome to Thrift City!</h1>
-
-        <Link to="store">
+        <p>The thrift store that changes every time you visit.</p>
+        <Link to="../store">
             <button className="btn-welcome" >Start Shopping</button>
         </Link>
       </>

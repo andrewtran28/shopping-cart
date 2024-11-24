@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useOutletContext } from 'react-router-dom';
 import Product from './Product';
 
-function Storepage({ updateCart }) {
+function Storepage({ addToCart }) {
     const NUM_ITEMS = 6;
     const [products, setProducts] = useState([]);
     const [store, setStore] = useState([]);
@@ -11,7 +10,11 @@ function Storepage({ updateCart }) {
         fetch('https://fakestoreapi.com/products/', { mode: 'cors'})
             .then(response => response.json())
             .then(data => setProducts(data))
-            .then(() => setStore(GetProducts()));
+            .finally(() => {
+                if (products.length !== 0) {
+                    setStore(getProducts());
+                }
+            })
     }, [products.length]);
 
     const randomNumber = () => {
@@ -19,7 +22,7 @@ function Storepage({ updateCart }) {
         return Math.floor(Math.random() * NUM_PRODUCTS);
     }
 
-    const GetProducts = () => { 
+    const getProducts = () => { 
         let stack = [];
         let indexStack = [];
     
@@ -35,7 +38,7 @@ function Storepage({ updateCart }) {
                 name: products[index].title,
                 img: products[index].image,
                 price: `${products[index].price}`,
-                key: products[index].id,
+                id: products[index].id,
             }  
     
             indexStack[i] = index;
@@ -45,9 +48,8 @@ function Storepage({ updateCart }) {
         return stack;
     }
 
-    const handleDataFromProduct = (productData) => {
-        console.log(productData);
-        updateCart(productData);
+    const handleAddProduct = (productData) => {
+        addToCart(productData);
     }
 
     return (
@@ -59,8 +61,9 @@ function Storepage({ updateCart }) {
                         name={item.name}
                         img={item.img}
                         price={item.price}
-                        key={item.key}
-                        sendDataToParent={handleDataFromProduct}
+                        id ={item.id}
+                        key={item.id}
+                        addProduct={handleAddProduct}
                     /> 
                 );
             })}          

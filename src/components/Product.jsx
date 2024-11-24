@@ -1,8 +1,13 @@
 import { useState } from 'react';
 
-function Product({ name, img, price, sendDataToParent }) {
+function Product({ name, img, price, id, addProduct }) {
     const [quantity, setQuantity] = useState(1);
-    const [item, setItem] = useState ("");
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        trailingZeroDisplay: 'stripIfInteger',
+    });
 
     const handleQuantityChange = (e) => {
         if (e.target.value <= 0) {
@@ -34,7 +39,7 @@ function Product({ name, img, price, sendDataToParent }) {
     }
 
     const handleAddToCart = () => {
-        sendDataToParent({name, price, quantity});
+        addProduct({name, img, price, quantity, id});
     }
 
     return (
@@ -42,8 +47,8 @@ function Product({ name, img, price, sendDataToParent }) {
             <img src={img} width="300px"/> <br />
             <span className="item-name">{name}</span>
             <br />
-            <span className="item-price">${price}</span>
-            <br />
+            <span className="item-price">{formatter.format(price)}</span>
+            <br />SKU: {id}
             <div>
                 <label>Quantity: </label>
                 <button className="btn-quantity" onClick={handleDecrease}>-</button>
