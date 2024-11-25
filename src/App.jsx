@@ -73,7 +73,9 @@ function App() {
 
       <main>
         {name === "home" ? (
-          <Homepage />
+          <Homepage 
+            // products={products}
+          />
         ) : name === "store" ? (
           <Storepage 
             addToCart={addToCart}
