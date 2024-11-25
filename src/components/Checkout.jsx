@@ -4,15 +4,14 @@ import trashIcon from '../assets/delete.png';
 import '../styles/Checkout.css';
 
 function Checkout({ cart, editCart }) {
-    const SHIPPING_FEE = 2.99;
-    const TAX_FEE = 0.13;
-
     const [checkoutCart, setCheckoutCart] = useState(cart);
     const [subtotal, setSubtotal] = useState(0);
     const [shipping, setShipping] = useState(0);
     const [tax, setTax] = useState(0);
     const [total, setTotal] = useState(0);
-
+    const SHIPPING_FEE = 2.99;
+    const TAX_FEE = 0.13;
+    const dialog = document.querySelector("dialog");
     const money = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -34,29 +33,29 @@ function Checkout({ cart, editCart }) {
             handleDelete(index);
             return;
         } else {
-            const newArray = checkoutCart.map((item, i) => {
+            const newCart = checkoutCart.map((item, i) => {
                 if (i === index) {
                     return {...item, quantity: checkoutCart[index].quantity - 1}
                 }
                 return item;
             }); 
-            handleEditCart(newArray);
+            handleEditCart(newCart);
         }
     }
 
     const handleIncrease = (index) => {
-        const newArray = checkoutCart.map((item, i) => {
+        const newCart = checkoutCart.map((item, i) => {
             if (i === index) {
                 return {...item, quantity: checkoutCart[index].quantity + 1}
             }
             return item;
         }); 
-        handleEditCart(newArray);
+        handleEditCart(newCart);
     }
 
     const handleDelete = (index) => {
-        const newArray = checkoutCart.filter((item, i) => i !== index);
-        handleEditCart(newArray);
+        const newCart = checkoutCart.filter((item, i) => i !== index);
+        handleEditCart(newCart);
     };
 
     const handleSubtotal = () => {
@@ -69,6 +68,11 @@ function Checkout({ cart, editCart }) {
         setShipping(shippingSum);
         setTax((shippingSum + subtotalSum) * TAX_FEE);
         setTotal((subtotalSum + shippingSum) * (1 + TAX_FEE));
+    }
+
+    const handlePlaceOrder = () => {
+        let newCart = [];
+        handleEditCart(newCart);
     }
 
     return (
@@ -119,7 +123,7 @@ function Checkout({ cart, editCart }) {
                         <br />
                         <hr />
                         <br />
-                        <button className="place-order">Place your order</button>
+                        <button className="place-order" onClick={() => handlePlaceOrder()}>Place your order</button>
                     </div>
                 </>
             )}
