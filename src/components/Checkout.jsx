@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import trashIcon from '../assets/delete.png';
+import '../styles/Checkout.css';
 
 function Checkout({ cart, editCart }) {
     const SHIPPING_FEE = 2.99;
@@ -70,48 +72,58 @@ function Checkout({ cart, editCart }) {
     }
 
     return (
-        <>
+        <div className="checkout">
             {checkoutCart.length <= 0 ? (
-                <>
+                <div className="checkout-empty">
                     <h1>Your cart is empty...</h1>
+
                     <Link to="../store">
                         <button className="btn-welcome" >Start Shopping</button>
                     </Link>
-                </>
+                </div>
             ) : (
                 <>
                     <div className="checkout-cart">
                         <h2>Cart ({checkoutCart.length})</h2>
                         <ul>
                             {checkoutCart.map((item, index) => (
-                                <li key={item.id}>
+                                <li className="checkout-item" key={item.id}>
                                     <img className="checkout-img" src={item.img} />
-                                    <div>{item.name}</div>
-                                    <div>{money.format(item.price)}</div>
-                                    <button className="btn-quantity" onClick={() => handleDecrease(index)}>-</button>
-                                    {item.quantity}
-                                    <button className="btn-quantity"onClick={() => handleIncrease(index)}>+</button>
-                                    <button onClick={() => handleDelete(index)}>Delete</button>
+                                    <div className="item-info">
+                                        <div className="checkout-name">
+                                            {item.name}
+                                            <br />
+                                            <div className="checkout-id">SKU: {String(item.id).padStart(4, '0')}</div>
+                                        </div>
+                                        <div className="item-cost">
+                                            <div className="checkout-price">{money.format(item.price)}</div>
+                                            <div className="checkout-quantity">
+                                                <button className="btn-quantity" onClick={() => handleDecrease(index)}>-</button>
+                                                    <div className="quantity-number">{item.quantity}</div>
+                                                <button className="btn-quantity"onClick={() => handleIncrease(index)}>+</button>
+                                                <img className="img-delete" src={trashIcon} onClick={() => handleDelete(index)}/>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
                             ))} 
                         </ul>                        
                     </div>
 
-                    <div className="summary">
+                    <div className="checkout-summary">
                         <h2>Summary</h2>
-                        <span className="subtotal">Subtotal: {money.format(subtotal)}</span>
+                        <span className="summary-text">Subtotal:<div>{money.format(subtotal)}</div></span> <br />
+                        <span className="summary-text">Shipping: <div>{money.format(shipping)}</div></span> <br />
+                        <span className="summary-text">Tax (13%): <div>{money.format(tax)}</div></span> <br/>
+                        <span className="summary-text order-total">Order Total: <div>{money.format(total)}</div></span>                        
                         <br />
-                        <span className="shipping">Shipping: {money.format(shipping)}</span>
-                        <br />
-                        <span className="tax">Tax (13%): {money.format(tax)}</span>
-                        <br/>
-                        <span className="tax">Order Total: {money.format(total)}</span>                        
                         <hr />
-                        <button>Place your order</button>
+                        <br />
+                        <button className="place-order">Place your order</button>
                     </div>
                 </>
             )}
-        </>
+        </div>
     )
 };
 

@@ -1,11 +1,15 @@
 .menu-carousel {
-  --carouselImgW: 598px;
-  --carouselImgH: 261px;
+  /* Adjust these values for size of carousel */
+  --carouselImgW: 600px;
+  --carouselImgH: 300px;
 
   display: flex;
   flex-direction: column;
+  align-items: center;
   position: relative;
-  width: calc(var(--carouselImgW) + 155px);
+  background-color: white;
+  border-radius: 8px;
+  padding: 0 20px 20px 20px;
 }
 
 .carousel-top {
@@ -15,14 +19,26 @@
 
 .carousel-frame {
   width: var(--carouselImgW);
-  height: calc(var(--carouselImgH));
+  height: calc(var(--carouselImgH) + 50px);
   white-space: nowrap;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .carousel-cont {
   display: flex;
   width: calc(5 * var(--carouselImgW));
+}
+
+.carousel-img{
+  width: var(--carouselImgW);
+  height: var(--carouselImgH);
+  object-fit: contain;
+}
+
+.carousel-name {
+  text-wrap: wrap;
+  text-align: center;
 }
 
 .carousel-left,

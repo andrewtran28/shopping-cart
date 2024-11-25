@@ -50,13 +50,13 @@ function Product({ name, img, price, id, addProduct }) {
             <span className="item-name">{name}</span>
             <div className="item-price">{formatter.format(price)}</div>
             <div className="item-quantity">
-                <label>Quantity: </label>
+                {/* <label>Quantity: </label> */}
                 <button className="btn-quantity" onClick={handleDecrease}>-</button>
                 <input className="input-quantity" type="number" min='0' max='99' value={quantity} onChange={handleQuantityChange} />
                 <button className="btn-quantity" onClick={handleIncrease}>+</button>
             </div>
             <button className="btn-add-cart" onClick={handleAddToCart}>Add to Cart</button>
-            <div className="item-SKU">SKU: {String(id).padStart(4, '0')}</div>
+            <div className="item-id">SKU: {String(id).padStart(4, '0')}</div>
         </div>
     )
 }

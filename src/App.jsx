@@ -5,11 +5,10 @@ import cartIcon from './assets/shopping-cart.svg';
 import Homepage from './components/Homepage';
 import Storepage from './components/Storepage';
 import Checkout from './components/Checkout';
-
-import './App.css';
+import './styles/App.css';
 
 function App() {
-  const [cart, setCart] = useState([]); //useState may be old data from cart update.
+  const [cart, setCart] = useState([]);
   const [itemNum, setItemNum] = useState(0); //Number of items bought and displayed on shopping cart icon
   const { name } = useParams();
 
@@ -74,7 +73,6 @@ function App() {
       <main>
         {name === "home" ? (
           <Homepage 
-            // products={products}
           />
         ) : name === "store" ? (
           <Storepage 
