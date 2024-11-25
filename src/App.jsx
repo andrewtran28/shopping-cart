@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-
 import logo from './assets/logo.png';
 import cartIcon from './assets/shopping-cart.svg';
 import Homepage from './components/Homepage';
