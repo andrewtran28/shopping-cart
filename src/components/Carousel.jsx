@@ -18,6 +18,10 @@ function Carousel() {
     const [store, setStore] = useState([]);
 
     useEffect(() => {
+        scroll();
+    }, [index]);
+
+    useEffect(() => {
         startInterval();
         return() => {
             if (intervalRef.current) {
@@ -46,7 +50,7 @@ function Carousel() {
     }
 
     const scrollLeft = () => {
-        index === 0 ? setIndex(IMG_NUM - 1) : setIndex(index - 1);
+        index === 0 ? setIndex((IMG_NUM - 1)) : setIndex(index - 1);
         scroll();
     }
 
@@ -97,7 +101,13 @@ function Carousel() {
 
             <div className="carousel-nav">
                 {imgIndex.map((image, i) => (
-                    <button key={i} className="circle-nav" onClick={() => circleNavigation(i)}></button>
+                    <button
+                    key={i}
+                    className="circle-nav"
+                    style={{
+                        backgroundColor: index === i ? "#bbbbbb" : "#242424",
+                    }}
+                    onClick={() => circleNavigation(i)}></button>
                 ))}
             </div>
         </div>
