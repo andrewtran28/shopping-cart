@@ -25,20 +25,20 @@ function Storepage({ addToCart }) {
 
   return (
     <>
-        <section className="storepage">
-            {store.map((item) => {
-                return (
-                <Product
-                    name={item.name}
-                    img={item.img}
-                    price={item.price}
-                    id={item.id}
-                    key={item.id}
-                    addProduct={handleAddProduct}
-                />
-                );
-            })}
-        </section>
+      <section className="storepage">
+          {store.map((item) => {
+              return (
+              <Product
+                  name={item.name}
+                  img={item.img}
+                  price={item.price}
+                  id={item.id}
+                  key={item.id}
+                  addProduct={handleAddProduct}
+              />
+              );
+          })}
+      </section>
     </>
   );
 }

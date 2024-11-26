@@ -22,7 +22,11 @@ function App() {
     if (index > -1) {
       const updatedCart = cart.map ((item) => {
         if (item.name === addedItem.name) {
-          return {...item, quantity: cart[index].quantity + addedItem.quantity }
+          if ((cart[index].quantity + addedItem.quantity) >= 99) {
+            return {...item, quantity: 99 }
+          } else {
+            return {...item, quantity: cart[index].quantity + addedItem.quantity }
+          }
         }
         return item;
       });

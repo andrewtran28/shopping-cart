@@ -19,13 +19,16 @@ ul {
   .checkout-cart, .checkout-summary {
     background-color: white;
     border-radius: 8px;
-    margin: 10px;
+    margin: 20px;
     padding: 20px;
+    height: fit-content;
   }
   
   .checkout-cart {
     background-color: white;
     max-width: 800px;
+    width: 100%;
+    margin-right: 0;
   }
   
   .checkout-item {
@@ -99,7 +102,6 @@ ul {
     flex-direction: column;
     max-width: 300px;
     width: 100%;
-    height: fit-content;
     padding-bottom: 30px;
   }
   

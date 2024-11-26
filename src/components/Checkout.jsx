@@ -46,7 +46,11 @@ function Checkout({ cart, editCart }) {
     const handleIncrease = (index) => {
         const newCart = checkoutCart.map((item, i) => {
             if (i === index) {
-                return {...item, quantity: checkoutCart[index].quantity + 1}
+                if (checkoutCart[index].quantity >= 99) {
+                    return {...item, quantity: 99 }
+                } else {
+                    return {...item, quantity: checkoutCart[index].quantity + 1}
+                }
             }
             return item;
         }); 
