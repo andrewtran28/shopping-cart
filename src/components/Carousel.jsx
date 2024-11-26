@@ -5,16 +5,26 @@ import "../styles/Carousel.css";
 function Carousel() {
     const IMG_NUM = 5;
     const IMG_WIDTH = 600; //pixels
-    const carousel = useRef(null);
 
     let imgIndex = [];
     for (let i = 0; i < IMG_NUM; i++) {
         imgIndex[i] = IMG_WIDTH * i;    
     }
 
+    const carousel = useRef(null);
+    const intervalRef = useRef(null);
     const [index, setIndex] = useState(0);
     const [products, setProducts] = useState([]);
     const [store, setStore] = useState([]);
+
+    useEffect(() => {
+        startInterval();
+        return() => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current)
+            }
+        };
+    }, [index]);
 
     useEffect(() => {
         fetch("https://fakestoreapi.com/products/", { mode: "cors" })
@@ -27,18 +37,12 @@ function Carousel() {
         });
     }, [products.length]);
 
-    useEffect(() => {
-        let autoscroll = setInterval(() => {
-            scrollRight();
-        }, 4000);
-        return() => {clearInterval(autoscroll)};
-    }, [index]);
-
     const scroll = () => {
         carousel.current.scrollTo({
             left: imgIndex[index],
             behavior: "smooth",
         });
+        startInterval();
     }
 
     const scrollLeft = () => {
@@ -47,7 +51,7 @@ function Carousel() {
     }
 
     const scrollRight = () => {
-        index === IMG_NUM - 1 ? setIndex(0) : setIndex(index + 1);
+        index === (IMG_NUM - 1) ? setIndex(0) : setIndex(index + 1);
         scroll();
     }
 
@@ -56,12 +60,22 @@ function Carousel() {
         scroll();
     }
 
+    const startInterval = () => {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+
+        intervalRef.current = setInterval(() => {
+            scrollRight();
+        }, 5000);
+    }
+
     return (
         <div className="menu-carousel">
             <h2>Bestsellers</h2>
             <br />
             <div className="carousel-top">
-                <button className="scroll carousel-left" onClick={() => scrollLeft()}>
+                <button className="scroll carousel-left" onClick={scrollLeft}>
                 &#60;
                 </button>
                 <div className="carousel-frame" ref={carousel}>
@@ -76,17 +90,15 @@ function Carousel() {
                     })}
                 </div>
                 </div>
-                <button className="scroll carousel-right" onClick={() => scrollRight()}>
+                <button className="scroll carousel-right" onClick={scrollRight}>
                 &#62;
                 </button>
             </div>
 
             <div className="carousel-nav">
-                <button className="circle-nav" id="nav0" onClick={() => circleNavigation(0)}></button>
-                <button className="circle-nav" id="nav1" onClick={() => circleNavigation(1)}></button>
-                <button className="circle-nav" id="nav2" onClick={() => circleNavigation(2)}></button>
-                <button className="circle-nav" id="nav3" onClick={() => circleNavigation(3)}></button>
-                <button className="circle-nav" id="nav4" onClick={() => circleNavigation(4)}></button>
+                {imgIndex.map((image, i) => (
+                    <button key={i} className="circle-nav" onClick={() => circleNavigation(i)}></button>
+                ))}
             </div>
         </div>
     );
