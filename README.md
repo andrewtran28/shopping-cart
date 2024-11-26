@@ -1,7 +1,7 @@
 # About
 A mock online web-store that features a shopping cart to hold and purchase items. The entire website is a single-page application (SPA) that utilizes react-router-dom to manipulate and re-reroute pages.
 
-[Live Preview]https://thriftcity.netlify.app/
+[Live Preview](https://thriftcity.netlify.app/)
 
 # React + Vite
 
